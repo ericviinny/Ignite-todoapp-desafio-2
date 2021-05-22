@@ -1,10 +1,13 @@
 import React from 'react';
 import { View, Text, StatusBar, StyleSheet } from 'react-native';
+import { useTheme } from 'styled-components';
 
 export function Header() {
+  const theme = useTheme();
+
   return (
-    <View style={styles.header}>
-      <Text style={styles.headerText}>to.</Text>
+    <View style={[styles.header, { backgroundColor: theme.colors.header }]}>
+      <Text style={[styles.headerText, {color: theme.colors.text_header}]}>to.</Text>
       <Text style={[styles.headerText, { fontFamily: 'Poppins-SemiBold' }]}>do</Text>
     </View>
   )

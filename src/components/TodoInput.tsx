@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Image, Platform, StyleSheet, TextInput, TouchableOpacity, View } from 'react-native';
+import { useTheme } from 'styled-components';
 
 import checkIcon from '../assets/icons/Check.png';
 
@@ -8,25 +9,34 @@ interface TodoInputProps {
 }
 
 export function TodoInput({ addTask }: TodoInputProps) {
-  // const [task, setTask] = useState('');
+  const theme = useTheme();
+
+  const [task, setTask] = useState('');
 
   function handleAddNewTask() {
-    //TODO - Call addTask and clean input value 
+    //TODO - Call addTask and clean input value
+    addTask(task);
+    setTask(''); 
   }
 
   return (
-    <View style={[styles.inputContainer, Platform.OS === 'ios' ? styles.inputIOSShadow : styles.inputAndroidShadow]}>
+    <View style={[styles.inputContainer, Platform.OS === 'ios' ? styles.inputIOSShadow : styles.inputAndroidShadow, { backgroundColor: theme.colors.input }]}>
       <TextInput 
-        style={styles.input} 
+        style={[styles.input, { backgroundColor: theme.colors.input, color: theme.colors.input_text }]} 
         placeholder="Adicionar novo todo..."
         returnKeyType="send"
         //TODO - use value, onChangeText and onSubmitEditing props
+        placeholderTextColor={theme.colors.input_text}
+        value={task}
+        onChangeText={(value) => setTask(value)}
+        onSubmitEditing={handleAddNewTask}
       />
       <TouchableOpacity
         testID="add-new-task-button"
         activeOpacity={0.7}
-        style={styles.addButton}
+        style={[styles.addButton, { backgroundColor: theme.colors.input_button }]}
         //TODO - onPress prop
+        onPress={handleAddNewTask}
       >
         <Image source={checkIcon} />
       </TouchableOpacity>
